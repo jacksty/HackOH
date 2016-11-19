@@ -27,6 +27,8 @@ class NeuralNet
 	void process(const char* input, char* output);
 	Eigen::VectorXf sigmoidVectorRounded(const Eigen::VectorXf& summedVector, float kValue = 15.0f);
 
+	Eigen::VectorXf sigmoidVectorRounded(const Eigen::VectorXf& summedVector, float kValue = 15.0f);
+
 public:
 	template<typename T>
 	inline void think(const T* input, T* output)

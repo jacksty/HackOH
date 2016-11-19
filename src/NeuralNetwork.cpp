@@ -61,7 +61,7 @@ Eigen::VectorXf NeuralNet::feedForward(const Eigen::VectorXf& inputs)
 	{
 		x.conservativeResize(x.size() + 1);
 		x[x.size() - 1] = 1.0f;
-
+		
 		if (i == hiddenLayerSizes.size() - 1)
 		{
 			x = (*weightLayers[0] * x);
@@ -86,14 +86,6 @@ Eigen::VectorXf NeuralNet::sigmoidVectorRounded(const Eigen::VectorXf& summedVec
 	}
 
 	return x;
-
-	//Eigen::VectorXf x;
-
-
-
-	//1.0f/(1.0f + pow(2.718281828459045, augmentedInputVector.dot(weightLayers[weightLayerIndex]))
-
-	//x.resize();
 }
 
 
