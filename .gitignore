@@ -30,4 +30,5 @@
 *.app
 
 *.db
-
+*.opendb
+tmp/*
