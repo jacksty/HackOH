@@ -5,12 +5,12 @@ NeuralNet::NeuralNet(int inputs, int outputs, Eigen::VectorXi hiddenLayersArray)
 	:
 	hiddenLayerSizes(hiddenLayersArray),
 	inputCount(inputs), outputCount(outputs),
-	//weightLayers(std::vector<Eigen::VectorXf*>()),
-	hiddenLayerCount(hiddenLayersArray.size())
+	weightLayers(std::vector<Eigen::MatrixXf*>())
+	//hiddenLayerCount(hiddenLayersArray.size())
 {
-	
+
 	//Creating inital wieght layer
-	if (hiddenLayerCount == 0)
+	if (hiddenLayerSizes.size() == 0)
 	{
 		weightLayers.push_back(new Eigen::MatrixXf(outputs, inputs + 1));
 	}
@@ -19,17 +19,18 @@ NeuralNet::NeuralNet(int inputs, int outputs, Eigen::VectorXi hiddenLayersArray)
 		weightLayers.push_back(new Eigen::MatrixXf(hiddenLayersArray[0], inputs + 1));
 		
 		//Createing the rest of the weight layers
-		for (int i = 0; i < hiddenLayerCount + 1; i++)
+		for (int i = 0; i < hiddenLayerSizes.size(); i++)
 		{
-			if (i + 1 == hiddenLayerCount)
+			if (i + 1 == hiddenLayerSizes.size())
 			{
 				weightLayers.push_back(new Eigen::MatrixXf(outputs, hiddenLayersArray[i] + 1));
-				break;
 			}
-			weightLayers.push_back(new Eigen::MatrixXf(hiddenLayersArray[i + 1], hiddenLayersArray[i] + 1));
+			else
+			{
+				weightLayers.push_back(new Eigen::MatrixXf(hiddenLayersArray[i + 1], hiddenLayersArray[i] + 1));
+			}
 		}
 	}
-
 
 	for (int i = 0; i < weightLayers.size(); i++)
 	{
@@ -39,9 +40,62 @@ NeuralNet::NeuralNet(int inputs, int outputs, Eigen::VectorXi hiddenLayersArray)
 
 Eigen::VectorXf NeuralNet::feedForward(const Eigen::VectorXf& inputs)
 {
-	Eigen::VectorXf x = Eigen::VectorXf{ inputs };
-	return x;
+	Eigen::VectorXf i = inputs;
+	return i;
+
+
+
+	i.conservativeResize(i.size() + 1);
+	i[i.size() - 1] = 1.0f;
+
+	Eigen::VectorXf x = (*weightLayers[0]) * i;
+
+	//Sigmoid datalayer
+	if (hiddenLayerSizes.size() == 0)
+	{
+		return i;
+	}
+
+
+	for (int i = 0; i < hiddenLayerSizes.size(); i++)
+	{
+		x.conservativeResize(x.size() + 1);
+		x[x.size() - 1] = 1.0f;
+		
+		if (i == hiddenLayerSizes.size() - 1)
+		{
+			x = (*weightLayers[0] * x);
+			//Sigmoid
+			break;
+		}
+
+		//Sigmoid
+	}
+
+	return i;
 }
+
+Eigen::VectorXf NeuralNet::sigmoidVectorRounded(const Eigen::VectorXf& summedVector, float kValue = 15.0f)
+{
+	Eigen::VectorXf x;
+	x.resize(summedVector.cols());
+	
+	for (int i = 0; i < summedVector.size(); i++)
+	{
+		x[i] = 1.0f / (1.0f + pow(2.718281828459045, -kValue*summedVector[i]);
+	}
+
+	return x;
+
+	//Eigen::VectorXf x;
+	
+
+	
+	//1.0f/(1.0f + pow(2.718281828459045, augmentedInputVector.dot(weightLayers[weightLayerIndex]))
+
+	//x.resize();
+}
+
 
 void NeuralNet::process(const char * input, char* output)
 {
