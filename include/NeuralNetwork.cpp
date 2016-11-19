@@ -5,10 +5,10 @@ NeuralNet::NeuralNet(int inputs, int outputs, Eigen::VectorXi hiddenLayersArray)
 	:
 	hiddenLayerSizes(hiddenLayersArray),
 	inputCount(inputs), outputCount(outputs),
-	//weightLayers(std::vector<Eigen::VectorXf*>()),
-	hiddenLayerCount(hiddenLayersArray.size())
+	hiddenLayerCount(hiddenLayersArray.size()),
+	learningRate(1.f)
 {
-	
+	expectedOutput.resize(outputCount);
 	//Creating inital wieght layer
 	if (hiddenLayerCount == 0)
 	{
@@ -46,16 +46,30 @@ Eigen::VectorXf NeuralNet::feedForward(const Eigen::VectorXf& inputs)
 void NeuralNet::process(const char * input, char* output)
 {
 	Eigen::VectorXf inputVector;
+	Eigen::VectorXf outputVector;
+
 	inputVector.resize(inputCount);
 
 	for (int i = 0; i < inputCount; i++)
 		inputVector[i] = static_cast<float>((input[i / 8] >> (i % 8)) & 0x1);
 
-	inputVector = feedForward(inputVector);
+	outputVector = feedForward(inputVector);
+
 
 	for (int i = 0; i < inputCount / 8; i++)
 		output[i] = 0;
 
 	for (int i = 0; i < inputCount; i++)
-		output[i / 8] |= (static_cast<char>(inputVector[i]) & 0x1) << (i % 8);
+		output[i / 8] |= (static_cast<char>(outputVector[i]) & 0x1) << (i % 8);
 }
+
+/*
+void NeuralNet::learn(const Eigen::VectorXf& inputs, const Eigen::VectorXf& outputs)
+{
+	if (outputs.size() > 1)
+	{
+		for()
+	}
+
+}
+*/
