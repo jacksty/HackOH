@@ -8,7 +8,6 @@ class NeuralNet
 	const int inputCount;
 	/// The number of bits provided as output.
 	const int outputCount;
-	const int hiddenLayerCount;
 	const Eigen::VectorXi hiddenLayerSizes;
 
 	/// Error correction multiplier for adjusting weights.
@@ -26,8 +25,7 @@ class NeuralNet
 	// METHODS
 	Eigen::VectorXf feedForward(const Eigen::VectorXf& inputs);
 	void process(const char* input, char* output);
-	//void learn(const Eigen::VectorXf& inputs, const Eigen::VectorXf& outputs);
-	
+	Eigen::VectorXf sigmoidVectorRounded(const Eigen::VectorXf& summedVector, float kValue = 15.0f);
 
 public:
 	template<typename T>
