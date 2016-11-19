@@ -1,4 +1,4 @@
-##include <stdafx.h>
+#include <stdafx.h>
 #include "NeuralNetwork.h"
 
 NeuralNet::NeuralNet(int inputs, int outputs, Eigen::VectorXi hiddenLayersArray)
@@ -8,7 +8,7 @@ NeuralNet::NeuralNet(int inputs, int outputs, Eigen::VectorXi hiddenLayersArray)
 	//weightLayers(std::vector<Eigen::VectorXf*>()),
 	hiddenLayerCount(hiddenLayersArray.size())
 {
-	/*
+	
 	//Creating inital wieght layer
 	if (hiddenLayerCount == 0)
 	{
@@ -17,20 +17,18 @@ NeuralNet::NeuralNet(int inputs, int outputs, Eigen::VectorXi hiddenLayersArray)
 	else
 	{
 		weightLayers.push_back(new Eigen::MatrixXf(hiddenLayersArray[0], inputs + 1));
-	}
-	*/
-	
-	//Createing the weight layers
-	for (int i = 0; i < hiddenLayerCount + 1; i++)
-	{
-		if (i + 1 == hiddenLayerCount)
+		
+		//Createing the rest of the weight layers
+		for (int i = 0; i < hiddenLayerCount + 1; i++)
 		{
-			weightLayers.push_back(new Eigen::MatrixXf(outputs, hiddenLayersArray[i] + 1));
-			break;
+			if (i + 1 == hiddenLayerCount)
+			{
+				weightLayers.push_back(new Eigen::MatrixXf(outputs, hiddenLayersArray[i] + 1));
+				break;
+			}
+			weightLayers.push_back(new Eigen::MatrixXf(hiddenLayersArray[i + 1], hiddenLayersArray[i] + 1));
 		}
-		weightLayers.push_back(new Eigen::MatrixXf(hiddenLayersArray[i + 1], hiddenLayersArray[i] + 1));
 	}
-
 
 
 	for (int i = 0; i < weightLayers.size(); i++)
@@ -45,7 +43,7 @@ Eigen::VectorXf NeuralNet::feedForward(const Eigen::VectorXf& inputs)
 	return x;
 }
 
-char * NeuralNet::process(const char * input, char* output)
+void NeuralNet::process(const char * input, char* output)
 {
 	Eigen::VectorXf inputVector;
 	inputVector.resize(inputCount);
@@ -60,6 +58,4 @@ char * NeuralNet::process(const char * input, char* output)
 
 	for (int i = 0; i < inputCount; i++)
 		output[i / 8] |= (static_cast<char>(inputVector[i]) & 0x1) << (i % 8);
-	
-	return output;
 }

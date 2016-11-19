@@ -15,7 +15,7 @@ public:
 
 	Eigen::VectorXf feedForward(const Eigen::VectorXf& inputs);
 
-	char* process(const char* input, char* output);
+	void process(const char* input, char* output);
 
 public:
 	template<typename T>
