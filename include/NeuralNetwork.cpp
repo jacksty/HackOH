@@ -1,11 +1,13 @@
 #include <stdafx.h>
 #include "NeuralNetwork.h"
 
-NeuralNet::NeuralNet(int inputs, int outputs, Eigen::VectorXi hiddenLayersArray) : inputCount(inputs), outputCount(outputs), hiddenLayerSizes(hiddenLayersArray)
+NeuralNet::NeuralNet(int inputs, int outputs, Eigen::VectorXi hiddenLayersArray)
+	:
+	hiddenLayerSizes(hiddenLayersArray),
+	inputCount(inputs), outputCount(outputs),
+	weightLayers(std::vector<Eigen::VectorXf*>()),
+	hiddenLayerCount(hiddenLayersArray.size())
 {
-	hiddenLayerCount = hiddenLayersArray.size();
-
-
 	//Creating inital wieght layer
 	if (hiddenLayerCount == 0)
 	{

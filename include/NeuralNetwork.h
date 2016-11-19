@@ -1,20 +1,16 @@
 #pragma once
 #include <stdafx.h>
-#include <vector>
-#include <Eigen/Dense>
 
 class NeuralNet
 {
 public:
-	int inputCount = 0;
+	const int inputCount;
+	const int hiddenLayerCount;
+	const int outputCount;
 
-	int hiddenLayerCount = 0;
+	const Eigen::VectorXi hiddenLayerSizes;
 
-	int outputCount = 0;
-
-	Eigen::VectorXi hiddenLayerSizes;
-
-	std::vector<Eigen::VectorXf*> weightLayers = std::vector<Eigen::VectorXf*>();
+	std::vector<Eigen::VectorXf*> weightLayers;
 
 	NeuralNet(int inputs, int outputs, Eigen::VectorXi hiddenLayersArray);
 
