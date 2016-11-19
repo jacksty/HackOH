@@ -2,9 +2,10 @@
 #include "PerceptronLayer.h"
 
 
-PerceptronLayer::PerceptronLayer(int inputCount, int outputCount)
+PerceptronLayer::PerceptronLayer(int inputCount, int outputCount, float kPower)
 	:
-	nIn(inputCount), nOut(outputCount)
+	nIn(inputCount), nOut(outputCount),
+	kValue(kPower)
 {
 	weights.resize(nIn, nOut);
 	std::uniform_real_distribution<float> distribution{ -1.f, 1.f };
@@ -19,4 +20,17 @@ PerceptronLayer::PerceptronLayer(int inputCount, int outputCount)
 
 PerceptronLayer::~PerceptronLayer()
 {
+}
+
+Eigen::VectorXf PerceptronLayer::sigmoidVectorRounded(const Eigen::VectorXf& summedVector)
+{
+	Eigen::VectorXf x;
+	x.resize(summedVector.cols());
+
+	for (int i = 0; i < summedVector.size(); i++)
+	{
+		x[i] = 1.0f / (1.0f + exp(-kValue*summedVector[i]));
+	}
+
+	return x;
 }

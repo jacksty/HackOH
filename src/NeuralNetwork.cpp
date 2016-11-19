@@ -75,19 +75,6 @@ Eigen::VectorXf NeuralNet::feedForward(const Eigen::VectorXf& inputs)
 	return i;
 }
 
-Eigen::VectorXf NeuralNet::sigmoidVectorRounded(const Eigen::VectorXf& summedVector, float kValue = 15.0f)
-{
-	Eigen::VectorXf x;
-	x.resize(summedVector.cols());
-
-	for (int i = 0; i < summedVector.size(); i++)
-	{
-		x[i] = 1.0f / (1.0f + exp(-kValue*summedVector[i]));
-	}
-
-	return x;
-}
-
 
 void NeuralNet::process(const char * input, char* output)
 {
