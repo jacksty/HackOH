@@ -14,5 +14,14 @@ public:
 
 	NeuralNet(int inputs, int outputs, Eigen::VectorXi hiddenLayersArray);
 
-	Eigen::VectorXf feedForward(const Eigen::VectorXi& inputs);
+	Eigen::VectorXf feedForward(const Eigen::VectorXf& inputs);
+
+	char* process(const char* input, char* output);
+
+public:
+	template<typename T>
+	void think(const T* input, T* output)
+	{
+		process(reinterpret_cast<const char*>(input), reinterpret_cast<char*>(output));
+	}
 };
