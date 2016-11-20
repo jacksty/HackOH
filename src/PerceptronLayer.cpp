@@ -9,7 +9,7 @@ PerceptronLayer::PerceptronLayer(int inputCount, int outputCount, float kPower)
 {
 	weights.resize(nIn, nOut);
 	std::uniform_real_distribution<float> distribution{ -1.f, 1.f };
-	std::default_random_engine engine(std::chrono::system_clock::now());
+	std::default_random_engine engine(std::chrono::system_clock::now().time_since_epoch().count());
 
 	for (int i = 0; i < nIn; i++)
 	{

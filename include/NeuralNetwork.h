@@ -5,6 +5,7 @@
 class NeuralNet
 {
 	// PROPERTIES
+protected:
 	/// The number of bits accepted as input.
 	const int inputCount;
 	/// The number of bits provided as output.
@@ -16,19 +17,21 @@ class NeuralNet
 	Eigen::VectorXf expectedOutput;
 
 	// CONSTRUCTOR
+public:
 	/// Creates a new NN.
 	///		inputs: The number of bits accepted as input.
 	///		outputs: The number of bits to be output.
 	///		hiddenLayersArray: A list containing the size for each hidden layer. Can be empty.
-	NeuralNet(int inputs, int outputs, std::initializer_list<int> hiddenInputSizes);
+	NeuralNet(int inputs, int outputs, std::initializer_list<int> hiddenInputSizes = {});
 
 	// METHODS
+protected:
 	Eigen::VectorXf feedForward(const Eigen::VectorXf& inputs);
 	void process(const char* input, char* output);
 
 public:
-	template<typename T>
-	inline void think(const T* input, T* output)
+	template<typename _In, typename _Out>
+	inline void think(const _In* input, _Out* output)
 	{
 		process(reinterpret_cast<const char*>(input), reinterpret_cast<char*>(output));
 	}
