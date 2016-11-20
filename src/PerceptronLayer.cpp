@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "PerceptronLayer.h"
+#include "..\include\PerceptronLayer.h"
 
 
 PerceptronLayer::PerceptronLayer(int inputCount, int outputCount, float kPower)
@@ -33,4 +34,18 @@ Eigen::VectorXf PerceptronLayer::sigmoidVectorRounded(const Eigen::VectorXf& sum
 	}
 
 	return x;
+}
+
+std::string PerceptronLayer::to_string() const
+{
+	std::stringstream stringBuilder;
+
+	for (int j = 0; j < nOut; j++)
+	{
+		stringBuilder << "\t";
+		for (int i = 0; i < nIn; i++)
+			stringBuilder << std::to_string(weights(i, j)) << (i < nIn - 1 ? ", " : "\n");
+	}
+
+	return stringBuilder.str();
 }

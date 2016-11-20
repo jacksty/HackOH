@@ -35,6 +35,7 @@ public:
 	{
 		process(reinterpret_cast<const char*>(input), reinterpret_cast<char*>(output));
 	}
+	std::string to_string() const;
 
 
 	// SETTERS

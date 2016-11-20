@@ -21,7 +21,8 @@ public:
 
 	// GETTERS
 public:
-	inline int getSizeIn() { return nIn; }
-	inline int getSizeOut() { return nOut; }
+	inline int getSizeIn() const { return nIn; }
+	inline int getSizeOut() const { return nOut; }
+	std::string to_string() const;
 };
 

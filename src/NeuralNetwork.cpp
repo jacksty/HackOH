@@ -62,3 +62,13 @@ void NeuralNet::process(const char * input, char* output)
 	for (int i = 0; i < inputCount; i++)
 		output[i / 8] |= (static_cast<char>(inputVector[i]) & 0x1) << (i % 8);
 }
+
+std::string NeuralNet::to_string() const
+{
+	std::stringstream stringBuilder;
+
+	for (int i = 0; i < layers.size(); i++)
+		stringBuilder << "Layer " << std::to_string(i) << ": \n" << layers[i].to_string();
+
+	return stringBuilder.str();
+}
