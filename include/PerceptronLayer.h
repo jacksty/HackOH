@@ -6,15 +6,22 @@ class PerceptronLayer
 	const float kValue;
 	Eigen::MatrixXf weights;
 
+	// CONSTRUCTOR / DESTRUCTOR
 public:
 	PerceptronLayer(int inputCount, int outputCount, float kPower = 15.f);
 	~PerceptronLayer();
 
+
+	// METHODS
+protected:
 	Eigen::VectorXf sigmoidVectorRounded(const Eigen::VectorXf& summedVector);
 
-	inline Eigen::VectorXf operator()(const Eigen::VectorXf& in)
-	{
-		return sigmoidVectorRounded(in * weights);
-	}
+public:
+	inline Eigen::VectorXf operator()(const Eigen::VectorXf& in) { return sigmoidVectorRounded(in * weights); }
+
+	// GETTERS
+public:
+	inline int getSizeIn() { return nIn; }
+	inline int getSizeOut() { return nOut; }
 };
 

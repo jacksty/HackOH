@@ -1,5 +1,6 @@
 #pragma once
 #include <stdafx.h>
+#include "PerceptronLayer.h"
 
 class NeuralNet
 {
@@ -8,11 +9,10 @@ class NeuralNet
 	const int inputCount;
 	/// The number of bits provided as output.
 	const int outputCount;
-	const Eigen::VectorXi hiddenLayerSizes;
+	std::vector<PerceptronLayer> layers;
 
 	/// Error correction multiplier for adjusting weights.
 	float learningRate;
-	std::vector<Eigen::MatrixXf*> weightLayers;
 	Eigen::VectorXf expectedOutput;
 
 	// CONSTRUCTOR
@@ -20,7 +20,7 @@ class NeuralNet
 	///		inputs: The number of bits accepted as input.
 	///		outputs: The number of bits to be output.
 	///		hiddenLayersArray: A list containing the size for each hidden layer. Can be empty.
-	NeuralNet(int inputs, int outputs, Eigen::VectorXi hiddenLayersArray);
+	NeuralNet(int inputs, int outputs, std::initializer_list<int> hiddenInputSizes);
 
 	// METHODS
 	Eigen::VectorXf feedForward(const Eigen::VectorXf& inputs);
